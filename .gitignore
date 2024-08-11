@@ -1,0 +1,52 @@
+# Compiled object files
+*.o
+*.ko
+*.elf
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Dependency files
+*.d
+
+# Build directories
+/builds
+
+# CMake generated files
+Makefile
+CMakeDoxyfile.in
+/CMakeFiles
+/CMakeCache.txt
+/CMakeScripts
+/_deps
+/*.cmake
+/*.cbp
+/*.gcno
+/*.gcda
+
+# Final product
+graph
+
+# IDE specific files (if you're using a specific IDE)
+.vscode/
+.idea/
+*.suo
+*.pdb
+*.user
+*.aps
+*.sln
+*.vcxproj
+*.vcproj
+*.ncb
+*.sdf
