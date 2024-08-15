@@ -5,6 +5,9 @@
 
 class Node {
 public:
+  Node(const std::string &name_, const float mass_, const glm::vec2 &position_,
+       const glm::vec2 &velocity_ = glm::vec2(0.0f),
+       const glm::vec2 &acceleration_ = glm::vec2(0.0f));
   Node(const std::string &name_, const float mass_);
   Node(const std::string &name_);
 

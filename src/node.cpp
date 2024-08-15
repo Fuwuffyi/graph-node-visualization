@@ -1,8 +1,13 @@
 #include "../include/node.hpp"
 
+Node::Node(const std::string &name_, const float mass_,
+           const glm::vec2 &position_, const glm::vec2 &velocity_,
+           const glm::vec2 &acceleration_)
+    : name(name_), mass(mass_), position(position_), velocity(velocity_),
+      acceleration(acceleration_) {}
+
 Node::Node(const std::string &name_, const float mass_)
-    : name(name_), mass(mass_), position(0.0f), velocity(0.0f),
-      acceleration(0.0f) {}
+    : Node(name_, mass_, glm::vec2(0.0f)) {}
 
 Node::Node(const std::string &name_) : Node(name_, 1.0f) {}
 
