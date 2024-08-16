@@ -36,6 +36,7 @@ Window::Window(const std::string &title, const uint32_t width,
     isRunning = false;
     return;
   }
+  SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 }
 
 Window::~Window() {
