@@ -37,7 +37,8 @@ private:
   static constexpr float VELOCITY_DAMPING =
       0.99f; // Multiplies the velocity every frame (0.0f - 1.0f)
   static constexpr float CENTER_ATTRACTION_FORCE_MULT =
-      50.0f; // Multiplies the center attraction force
+      200.0f; // Multiplies the center attraction force
+  static constexpr float REPULSION_FORCE_MULT = 400.0f;
 
 private:
   // Actual needed variables

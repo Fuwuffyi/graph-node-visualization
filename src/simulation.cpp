@@ -17,11 +17,24 @@ void Simulation::addLink(const Node &nodeA, const Node &nodeB) {
 
 void Simulation::update(const float deltaTime) {
   for (Node &node : nodes) {
+    // Add center gravity force to all nodes
     const glm::vec2 centerAttractionForce =
         -(node.getPosition() / translation) * CENTER_ATTRACTION_FORCE_MULT;
     node.applyForce(centerAttractionForce);
+    // Add all nodes repulsion force
     for (Node &other : nodes) {
-      // TODO: add repulsion force
+      if (&other != &node) {
+        // Calculate distance and direction
+        // TODO: Add distance treshold
+        const float distance =
+            glm::distance(other.getPosition(), node.getPosition());
+        const glm::vec2 directionVector =
+            -glm::normalize(other.getPosition() - node.getPosition());
+        // Calculate the force, using the inverse of distance (stronger force
+        // when close), multiplied by half cause newton
+        node.applyForce(directionVector * (1.0f / distance) *
+                        REPULSION_FORCE_MULT * 0.5f);
+      }
     }
   }
   // TODO: Add link attraction forces
