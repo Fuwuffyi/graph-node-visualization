@@ -2,8 +2,8 @@
 
 void RendererHelper::drawPixel(SDL_Renderer *renderer, const float x,
                                const float y) {
-  const uint32_t ix = static_cast<uint32_t>(x + 0.5f);
-  const uint32_t iy = static_cast<uint32_t>(y + 0.5f);
+  const int32_t ix = static_cast<int32_t>(x + 0.5f);
+  const int32_t iy = static_cast<int32_t>(y + 0.5f);
   SDL_RenderDrawPoint(renderer, ix, iy);
 }
 
@@ -45,9 +45,9 @@ void drawLine(SDL_Renderer *renderer, const glm::vec2 &start,
   const glm::vec2 directionNorm = direction / length;
   const glm::vec2 perp = glm::vec2(-directionNorm.y, directionNorm.x);
   const glm::vec2 offset = perp * (thickness / 2.0f);
-  const SDL_FPoint points[4] = {start.x + offset.x, start.y + offset.y,
-                                start.x - offset.x, start.y - offset.y,
-                                end.x - offset.x,   end.y - offset.y,
-                                end.x + offset.x,   end.y + offset.y};
+  const SDL_FPoint points[4] = {{start.x + offset.x, start.y + offset.y},
+                                {start.x - offset.x, start.y - offset.y},
+                                {end.x - offset.x, end.y - offset.y},
+                                {end.x + offset.x, end.y + offset.y}};
   SDL_RenderDrawLinesF(renderer, points, 4);
 }
