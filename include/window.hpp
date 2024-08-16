@@ -1,5 +1,6 @@
 #pragma once
 
+#include "simulation.hpp"
 #include <SDL2/SDL.h>
 #include <string>
 
@@ -8,11 +9,11 @@ public:
   Window(const std::string &title, const uint32_t width, const uint32_t height);
   ~Window();
 
-  void run();
+  void run(Simulation &simulation);
 
   void handleEvents();
-  void update();
-  void render();
+  void update(Simulation &simulation);
+  void render(Simulation &simulation);
 
   void handleKeyDown(const SDL_KeyCode &k);
   void handleMouseButtonDown(const SDL_MouseButtonEvent &e);

@@ -41,11 +41,11 @@ Window::~Window() {
   SDL_Quit();
 }
 
-void Window::run() {
+void Window::run(Simulation &simulation) {
   while (isRunning) {
     handleEvents();
-    update();
-    render();
+    update(simulation);
+    render(simulation);
   }
 }
 
@@ -66,14 +66,12 @@ void Window::handleEvents() {
   }
 }
 
-void Window::update() {
-  // TODO:
-}
+void Window::update(Simulation &simulation) { simulation.update(); }
 
-void Window::render() {
+void Window::render(Simulation &simulation) {
   SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
   SDL_RenderClear(renderer);
-  // TODO:
+  simulation.render(renderer);
   SDL_RenderPresent(renderer);
 }
 
@@ -84,6 +82,7 @@ void Window::handleKeyDown(const SDL_KeyCode &k) {
 }
 
 void Window::handleMouseButtonDown(const SDL_MouseButtonEvent &e) {
+  // TODO: Make nodes move with mouse?
   if (e.button == SDL_BUTTON_LEFT) {
     std::cout << "Left mouse button clicked at (" << e.x << ", " << e.y << ")"
               << std::endl;
