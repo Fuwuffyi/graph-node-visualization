@@ -12,7 +12,7 @@ Simulation::Simulation(const float width_, const float height_)
 void Simulation::addNode(const Node &node) { nodes.push_back(node); }
 
 void Simulation::addLink(const uint32_t indexA, const uint32_t indexB) {
-  links.emplace_back(indexA, indexB);
+  links.insert(Link_t{indexA, indexB});
 }
 
 void Simulation::update(const float deltaTime) {
@@ -25,7 +25,6 @@ void Simulation::update(const float deltaTime) {
     for (Node &other : nodes) {
       if (&other != &node) {
         // Calculate distance and direction
-        // TODO: Add distance treshold
         const float distance =
             glm::distance(other.getPosition(), node.getPosition());
         const glm::vec2 directionVector =
@@ -50,8 +49,10 @@ void Simulation::update(const float deltaTime) {
       // Calculate the force, using the inverse of distance (stronger force
       // when close), multiplied by half cause newton
       // FIXME: get better value rather than just distance
-      nodeA.applyForce(directionVector * distance * ATTRACTION_FORCE_MULT *
-                       0.5f);
+      nodeA.applyForce(directionVector *
+                       ((distance - ATTRACTION_DISTANCE_TRESHOLD) /
+                        (distance + 1 - ATTRACTION_DISTANCE_TRESHOLD)) *
+                       ATTRACTION_FORCE_MULT * 0.5f);
     }
   }
   // Update all the particles with the accumulated forces
@@ -78,6 +79,6 @@ void Simulation::render(SDL_Renderer *renderer) const {
 }
 
 const std::vector<Node> &Simulation::getNodes() const { return nodes; }
-const std::vector<Simulation::Link_t> &Simulation::getLinks() const {
+const std::set<Simulation::Link_t> &Simulation::getLinks() const {
   return links;
 }

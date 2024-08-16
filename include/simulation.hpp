@@ -2,6 +2,7 @@
 
 #include "node.hpp"
 #include <SDL2/SDL.h>
+#include <set>
 #include <vector>
 
 class Simulation {
@@ -9,6 +10,13 @@ private:
   typedef struct Link {
     const uint32_t idxNodeA;
     const uint32_t idxNodeB;
+
+    bool operator<(const Link &other) const {
+      if (idxNodeA != other.idxNodeA) {
+        return idxNodeA < other.idxNodeA;
+      }
+      return idxNodeB < other.idxNodeB;
+    }
   } Link_t;
 
 public:
@@ -23,7 +31,7 @@ public:
   void render(SDL_Renderer *renderer) const;
 
   const std::vector<Node> &getNodes() const;
-  const std::vector<Link_t> &getLinks() const;
+  const std::set<Link_t> &getLinks() const;
 
 private:
   // Simulation visualization parameters
@@ -38,17 +46,18 @@ private:
       12.0f; // Node's radius multiplier
              // Simulation physics parameters
   static constexpr float VELOCITY_DAMPING =
-      0.99f; // Multiplies the velocity every frame (0.0f - 1.0f)
+      0.9f; // Multiplies the velocity every frame (0.0f - 1.0f)
   static constexpr float CENTER_ATTRACTION_FORCE_MULT =
       200.0f; // Multiplies the center attraction force
   static constexpr float REPULSION_FORCE_MULT = 800.0f;
-  static constexpr float ATTRACTION_FORCE_MULT = 600.0f;
-  static constexpr float ATTRACTION_DISTANCE_TRESHOLD = 150.0f;
+  static constexpr float ATTRACTION_FORCE_MULT = 2000.0f;
+  static constexpr float ATTRACTION_DISTANCE_TRESHOLD =
+      80.0f; // Maximum distance at which there is no attraction
 
 private:
   // Actual needed variables
   const glm::vec2 dimensions;
   const glm::vec2 translation;
   std::vector<Node> nodes;
-  std::vector<Link_t> links;
+  std::set<Link_t> links;
 };
