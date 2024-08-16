@@ -36,7 +36,7 @@ public:
 private:
   // Simulation visualization parameters
   static constexpr glm::tvec4<uint8_t> LINK_COLOR =
-      glm::tvec4<uint8_t>(44, 44, 44, 255); // The node's link line color
+      glm::tvec4<uint8_t>(175, 25, 0, 255); // The node's link line color
   static constexpr glm::tvec4<uint8_t> NODE_OUTLINE =
       glm::tvec4<uint8_t>(225, 225, 225, 100); // Node's outline color in RGBA
   static constexpr glm::tvec4<uint8_t> NODE_FILL =
