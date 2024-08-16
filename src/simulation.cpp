@@ -37,8 +37,23 @@ void Simulation::update(const float deltaTime) {
       }
     }
   }
-  // TODO: Add link attraction forces
-
+  for (const Link_t &link : links) {
+    // Get the two nodes linked together
+    Node &nodeA = nodes[link.idxNodeA];
+    Node &nodeB = nodes[link.idxNodeB];
+    // Calculate distance and direction
+    const float distance =
+        glm::distance(nodeB.getPosition(), nodeA.getPosition());
+    if (distance > ATTRACTION_DISTANCE_TRESHOLD) {
+      const glm::vec2 directionVector =
+          glm::normalize(nodeB.getPosition() - nodeA.getPosition());
+      // Calculate the force, using the inverse of distance (stronger force
+      // when close), multiplied by half cause newton
+      // FIXME: get better value rather than just distance
+      nodeA.applyForce(directionVector * distance * ATTRACTION_FORCE_MULT *
+                       0.5f);
+    }
+  }
   // Update all the particles with the accumulated forces
   for (Node &node : nodes) {
     node.update(VELOCITY_DAMPING, deltaTime);
@@ -46,7 +61,6 @@ void Simulation::update(const float deltaTime) {
 }
 
 void Simulation::render(SDL_Renderer *renderer) const {
-  SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
   for (const Link_t &link : links) {
     const Node &nodeA = nodes[link.idxNodeA];
     const Node &nodeB = nodes[link.idxNodeB];

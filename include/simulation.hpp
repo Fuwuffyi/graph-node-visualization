@@ -42,6 +42,8 @@ private:
   static constexpr float CENTER_ATTRACTION_FORCE_MULT =
       200.0f; // Multiplies the center attraction force
   static constexpr float REPULSION_FORCE_MULT = 800.0f;
+  static constexpr float ATTRACTION_FORCE_MULT = 600.0f;
+  static constexpr float ATTRACTION_DISTANCE_TRESHOLD = 150.0f;
 
 private:
   // Actual needed variables
