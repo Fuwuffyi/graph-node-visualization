@@ -11,8 +11,8 @@ Simulation::Simulation(const float width_, const float height_)
 
 void Simulation::addNode(const Node &node) { nodes.push_back(node); }
 
-void Simulation::addLink(const Node &nodeA, const Node &nodeB) {
-  // TODO:
+void Simulation::addLink(const uint32_t indexA, const uint32_t indexB) {
+  links.emplace_back(indexA, indexB);
 }
 
 void Simulation::update(const float deltaTime) {
@@ -51,7 +51,8 @@ void Simulation::render(SDL_Renderer *renderer) const {
     const Node &nodeA = nodes[link.idxNodeA];
     const Node &nodeB = nodes[link.idxNodeB];
     RendererHelper::drawLine(renderer, nodeA.getPosition() + translation,
-                             nodeB.getPosition(), LINK_THICKNESS, LINK_COLOR);
+                             nodeB.getPosition() + translation, LINK_THICKNESS,
+                             LINK_COLOR);
   }
   for (const Node &node : nodes) {
     const float nodeRadius = NODE_SIZE_MULTIPLIER * node.getMass();

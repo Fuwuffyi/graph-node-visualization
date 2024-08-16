@@ -17,7 +17,7 @@ public:
   Simulation(const float width_, const float height_);
 
   void addNode(const Node &node);
-  void addLink(const Node &nodeA, const Node &nodeB);
+  void addLink(const uint32_t indexA, const uint32_t indexB);
 
   void update(const float deltaTime);
   void render(SDL_Renderer *renderer) const;
@@ -33,7 +33,7 @@ private:
       glm::tvec4<uint8_t>(225, 225, 225, 100); // Node's outline color in RGBA
   static constexpr glm::tvec4<uint8_t> NODE_FILL =
       glm::tvec4<uint8_t>(179, 179, 179, 255);  // Node's inner color in RGBA
-  static constexpr float LINK_THICKNESS = 4.0f; // Thickness of the link line
+  static constexpr float LINK_THICKNESS = 8.0f; // Thickness of the link line
   static constexpr float NODE_SIZE_MULTIPLIER =
       12.0f; // Node's radius multiplier
              // Simulation physics parameters
