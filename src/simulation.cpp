@@ -25,8 +25,10 @@ void Simulation::update(const float deltaTime) {
     for (Node &other : nodes) {
       if (&other != &node) {
         // Calculate distance and direction
-        const float distance =
-            glm::distance(other.getPosition(), node.getPosition());
+        float distance = glm::distance(other.getPosition(), node.getPosition());
+        if (distance < 0.001f) {
+          distance = 0.001f;
+        }
         const glm::vec2 directionVector =
             -glm::normalize(other.getPosition() - node.getPosition());
         // Calculate the force, using the inverse of distance (stronger force
