@@ -22,14 +22,17 @@ public:
   void update(const float deltaTime);
   void render(SDL_Renderer *renderer) const;
 
+  const std::vector<Node> &getNodes() const;
+  const std::vector<Link_t> &getLinks() const;
+
 private:
   // Simulation visualization parameters
   static constexpr glm::tvec4<uint8_t> LINK_COLOR =
-      glm::tvec4<uint8_t>(120, 120, 120, 255); // The node's link line color
+      glm::tvec4<uint8_t>(44, 44, 44, 255); // The node's link line color
   static constexpr glm::tvec4<uint8_t> NODE_OUTLINE =
-      glm::tvec4<uint8_t>(0, 255, 255, 150); // Node's outline color in RGBA
+      glm::tvec4<uint8_t>(225, 225, 225, 100); // Node's outline color in RGBA
   static constexpr glm::tvec4<uint8_t> NODE_FILL =
-      glm::tvec4<uint8_t>(255, 255, 255, 255);  // Node's inner color in RGBA
+      glm::tvec4<uint8_t>(179, 179, 179, 255);  // Node's inner color in RGBA
   static constexpr float LINK_THICKNESS = 4.0f; // Thickness of the link line
   static constexpr float NODE_SIZE_MULTIPLIER =
       12.0f; // Node's radius multiplier
@@ -38,7 +41,7 @@ private:
       0.99f; // Multiplies the velocity every frame (0.0f - 1.0f)
   static constexpr float CENTER_ATTRACTION_FORCE_MULT =
       200.0f; // Multiplies the center attraction force
-  static constexpr float REPULSION_FORCE_MULT = 400.0f;
+  static constexpr float REPULSION_FORCE_MULT = 800.0f;
 
 private:
   // Actual needed variables

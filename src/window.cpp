@@ -91,7 +91,7 @@ void Window::update(Simulation &simulation, const float deltaTime) {
 }
 
 void Window::render(Simulation &simulation) {
-  SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
+  SDL_SetRenderDrawColor(renderer, 0x30, 0x30, 0x30, 0xFF);
   SDL_RenderClear(renderer);
   simulation.render(renderer);
   SDL_RenderPresent(renderer);

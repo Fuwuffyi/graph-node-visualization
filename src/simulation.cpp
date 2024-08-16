@@ -61,3 +61,8 @@ void Simulation::render(SDL_Renderer *renderer) const {
         renderer, node.getPosition() + translation, nodeRadius, NODE_OUTLINE);
   }
 }
+
+const std::vector<Node> &Simulation::getNodes() const { return nodes; }
+const std::vector<Simulation::Link_t> &Simulation::getLinks() const {
+  return links;
+}
