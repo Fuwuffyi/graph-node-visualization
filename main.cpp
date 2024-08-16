@@ -8,12 +8,16 @@ constexpr uint32_t SCREEN_HEIGHT = 900;
 
 int main() {
   // Create the node simulation
-  Simulation simulation;
+  Simulation simulation(SCREEN_WIDTH, SCREEN_HEIGHT);
   // Add random nodes
   std::random_device rd;
   std::mt19937 generator(rd());
-  std::uniform_real_distribution<float> wDistr(0.0f, SCREEN_WIDTH);
-  std::uniform_real_distribution<float> hDistr(0.0f, SCREEN_HEIGHT);
+  std::uniform_real_distribution<float> wDistr(
+      -static_cast<float>(SCREEN_HEIGHT) / 2.0f,
+      static_cast<float>(SCREEN_WIDTH) / 2.0f);
+  std::uniform_real_distribution<float> hDistr(
+      -static_cast<float>(SCREEN_HEIGHT) / 2.0f,
+      static_cast<float>(SCREEN_HEIGHT) / 2.0f);
   for (uint32_t i = 0; i < 30; ++i) {
     simulation.addNode(Node(&"Node "[i], 1.0f,
                             glm::vec2(wDistr(generator), hDistr(generator))));

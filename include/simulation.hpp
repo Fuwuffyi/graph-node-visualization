@@ -12,8 +12,9 @@ private:
   } Link_t;
 
 public:
-  Simulation(const std::vector<Node> &nodes_);
-  Simulation();
+  Simulation(const float width_, const float height_,
+             const std::vector<Node> &nodes_);
+  Simulation(const float width_, const float height_);
 
   void addNode(const Node &node);
   void addLink(const Node &nodeA, const Node &nodeB);
@@ -32,10 +33,16 @@ private:
   static constexpr float LINK_THICKNESS = 4.0f; // Thickness of the link line
   static constexpr float NODE_SIZE_MULTIPLIER =
       12.0f; // Node's radius multiplier
-  // Simulation physics parameters
+             // Simulation physics parameters
+  static constexpr float VELOCITY_DAMPING =
+      0.99f; // Multiplies the velocity every frame (0.0f - 1.0f)
+  static constexpr float CENTER_ATTRACTION_FORCE_MULT =
+      50.0f; // Multiplies the center attraction force
 
 private:
   // Actual needed variables
+  const glm::vec2 dimensions;
+  const glm::vec2 translation;
   std::vector<Node> nodes;
   std::vector<Link_t> links;
 };
