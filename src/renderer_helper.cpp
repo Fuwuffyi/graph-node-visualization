@@ -53,10 +53,16 @@ void RendererHelper::drawLine(SDL_Renderer *renderer, const glm::vec2 &start,
   const glm::vec2 directionNorm = direction / length;
   const glm::vec2 perp = glm::vec2(-directionNorm.y, directionNorm.x);
   const glm::vec2 offset = perp * (thickness / 2.0f);
-  const SDL_FPoint points[4] = {{start.x + offset.x, start.y + offset.y},
-                                {start.x - offset.x, start.y - offset.y},
-                                {end.x - offset.x, end.y - offset.y},
-                                {end.x + offset.x, end.y + offset.y}};
+  const glm::vec2 points[4] = {
+      glm::vec2(start.x + offset.x, start.y + offset.y),
+      glm::vec2(end.x - offset.x, end.y + offset.y),
+      glm::vec2(start.x - offset.x, start.y - offset.y),
+      glm::vec2(end.x + offset.x, end.y - offset.y)};
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-  SDL_RenderDrawLinesF(renderer, points, 4);
+  for (uint8_t i = 0; i < 4; ++i) {
+    for (uint8_t j = 0; j < 4; ++j) {
+      SDL_RenderDrawLineF(renderer, points[i].x, points[i].y, points[j].x,
+                          points[j].y);
+    }
+  }
 }
