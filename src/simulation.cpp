@@ -12,7 +12,7 @@ void Simulation::addLink(/* TODO: */) {
   // TODO:
 }
 
-void Simulation::update() {
+void Simulation::update(const float deltaTime) {
   // TODO:
 }
 

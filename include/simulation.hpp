@@ -18,7 +18,7 @@ public:
   void addNode(const Node &node);
   void addLink(/* TODO: */);
 
-  void update();
+  void update(const float deltaTime);
   void render(SDL_Renderer *renderer) const;
 
 private:

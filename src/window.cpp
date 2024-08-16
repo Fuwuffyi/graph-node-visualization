@@ -1,5 +1,8 @@
 #include "../include/window.hpp"
 
+#include <SDL2/SDL_timer.h>
+#include <csignal>
+#include <glm/common.hpp>
 #include <iostream>
 
 Window::Window(const std::string &title, const uint32_t width,
@@ -42,10 +45,26 @@ Window::~Window() {
 }
 
 void Window::run(Simulation &simulation) {
+  uint32_t previousTime = SDL_GetTicks();
   while (isRunning) {
+    // Handle all events
     handleEvents();
-    update(simulation);
+    if (!isRunning) {
+      break;
+    }
+    // Calculate deltatime
+    const uint32_t currentTime = SDL_GetTicks();
+    const uint32_t frameTime = currentTime - previousTime;
+    const float deltaTime = static_cast<float>(frameTime) / 1000.0f;
+    previousTime = currentTime;
+    // Update screen
+    update(simulation, deltaTime);
     render(simulation);
+    // Set FPS cap
+    const uint32_t frameDuration = SDL_GetTicks() - currentTime;
+    if (frameDuration < FRAME_DELAY) {
+      SDL_Delay(FRAME_DELAY - frameDuration);
+    }
   }
 }
 
@@ -66,7 +85,9 @@ void Window::handleEvents() {
   }
 }
 
-void Window::update(Simulation &simulation) { simulation.update(); }
+void Window::update(Simulation &simulation, const float deltaTime) {
+  simulation.update(deltaTime);
+}
 
 void Window::render(Simulation &simulation) {
   SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF);
