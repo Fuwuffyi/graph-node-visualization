@@ -80,9 +80,9 @@ void Simulation::render(SDL_Renderer *renderer) const {
         renderer, node.getPosition() + translation, nodeRadius, NODE_FILL);
     RendererHelper::drawCircleOutline(
         renderer, node.getPosition() + translation, nodeRadius, NODE_OUTLINE);
-    const glm::vec2 &velo = node.getVelocity() * 5.0f;
+    const glm::vec2 &velo = node.getVelocity() * 10.0f;
     RendererHelper::drawLine(renderer, node.getPosition() + translation,
-                             node.getPosition() + velo + translation, 5.0f,
+                             node.getPosition() + velo + translation, 2.0f,
                              glm::tvec4<uint8_t>(0, 255, 255, 255));
   }
 }
