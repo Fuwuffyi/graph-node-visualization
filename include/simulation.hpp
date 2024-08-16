@@ -48,9 +48,9 @@ private:
   static constexpr float VELOCITY_DAMPING =
       0.99f; // Multiplies the velocity every frame (0.0f - 1.0f)
   static constexpr float CENTER_ATTRACTION_FORCE_MULT =
-      400.0f; // Multiplies the center attraction force
-  static constexpr float REPULSION_FORCE_MULT = 2800.0f;
-  static constexpr float ATTRACTION_FORCE_MULT = 2800.0f;
+      80.0f; // Multiplies the center attraction force
+  static constexpr float REPULSION_FORCE_MULT = 280.0f;
+  static constexpr float ATTRACTION_FORCE_MULT = 280.0f;
   static constexpr float ATTRACTION_DISTANCE_TRESHOLD =
       20.0f; // Maximum distance at which there is no attraction
 

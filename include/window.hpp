@@ -19,7 +19,7 @@ public:
   void handleMouseButtonDown(const SDL_MouseButtonEvent &e);
 
 private:
-  static constexpr uint32_t TARGET_FPS = 360;
+  static constexpr uint32_t TARGET_FPS = 300;
   static constexpr uint32_t FRAME_DELAY = 1000 / TARGET_FPS;
 
   SDL_Window *window;

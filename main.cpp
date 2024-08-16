@@ -19,12 +19,12 @@ int main() {
   std::uniform_real_distribution<float> hDistr(
       -static_cast<float>(SCREEN_HEIGHT) / 6.0f,
       static_cast<float>(SCREEN_HEIGHT) / 6.0f);
-  for (uint32_t i = 0; i < 30; ++i) {
+  for (uint32_t i = 0; i < 60; ++i) {
     simulation.addNode(Node(&"Node "[i], 1.0f,
                             glm::vec2(wDistr(generator), hDistr(generator))));
   }
   const std::vector<Node> &nodes = simulation.getNodes();
-  for (uint32_t i = 0; i < 20; ++i) {
+  for (uint32_t i = 0; i < 50; ++i) {
     const uint32_t v1 = static_cast<uint32_t>(uDistr(generator) * nodes.size());
     uint32_t v2 = static_cast<uint32_t>(uDistr(generator) * nodes.size());
     while (v2 == v1) {

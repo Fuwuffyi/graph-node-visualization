@@ -16,7 +16,7 @@ void Node::applyForce(const glm::vec2 &force) { acceleration += force / mass; }
 void Node::update(const float velocityDamping, const float deltaTime) {
   velocity += acceleration * deltaTime;
   velocity *= velocityDamping;
-  position += velocity * deltaTime;
+  position += velocity;
   acceleration = glm::vec2(0.0f);
 }
 
