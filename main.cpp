@@ -14,17 +14,17 @@ int main() {
   std::mt19937 generator(rd());
   std::uniform_real_distribution<float> uDistr(0.0f, 1.0f);
   std::uniform_real_distribution<float> wDistr(
-      -static_cast<float>(SCREEN_HEIGHT) / 2.0f,
-      static_cast<float>(SCREEN_WIDTH) / 2.0f);
+      -static_cast<float>(SCREEN_HEIGHT) / 6.0f,
+      static_cast<float>(SCREEN_WIDTH) / 6.0f);
   std::uniform_real_distribution<float> hDistr(
-      -static_cast<float>(SCREEN_HEIGHT) / 2.0f,
-      static_cast<float>(SCREEN_HEIGHT) / 2.0f);
+      -static_cast<float>(SCREEN_HEIGHT) / 6.0f,
+      static_cast<float>(SCREEN_HEIGHT) / 6.0f);
   for (uint32_t i = 0; i < 30; ++i) {
     simulation.addNode(Node(&"Node "[i], 1.0f,
                             glm::vec2(wDistr(generator), hDistr(generator))));
   }
   const std::vector<Node> &nodes = simulation.getNodes();
-  for (uint32_t i = 0; i < 60; ++i) {
+  for (uint32_t i = 0; i < 20; ++i) {
     const uint32_t v1 = static_cast<uint32_t>(uDistr(generator) * nodes.size());
     uint32_t v2 = static_cast<uint32_t>(uDistr(generator) * nodes.size());
     while (v2 == v1) {

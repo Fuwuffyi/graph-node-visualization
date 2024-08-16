@@ -46,12 +46,11 @@ void Simulation::update(const float deltaTime) {
     if (distance > ATTRACTION_DISTANCE_TRESHOLD) {
       const glm::vec2 directionVector =
           glm::normalize(nodeB.getPosition() - nodeA.getPosition());
-      // Calculate the force, using the inverse of distance (stronger force
-      // when close), multiplied by half cause newton
-      // FIXME: get better value rather than just distance
+      // Calculate the force, using x / x + sfunction (stronger force
+      // when far), multiplied by half cause newton
       nodeA.applyForce(directionVector *
-                       ((distance - ATTRACTION_DISTANCE_TRESHOLD) /
-                        (distance + 1 - ATTRACTION_DISTANCE_TRESHOLD)) *
+                       (std::powf(distance - ATTRACTION_DISTANCE_TRESHOLD, 2) *
+                        (1 / (std::powf(glm::length(translation), 2)))) *
                        ATTRACTION_FORCE_MULT * 0.5f);
     }
   }
