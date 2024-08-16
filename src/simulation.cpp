@@ -27,15 +27,14 @@ void Simulation::render(SDL_Renderer *renderer) const {
   for (const Link_t &link : links) {
     const Node &nodeA = nodes[link.idxNodeA];
     const Node &nodeB = nodes[link.idxNodeB];
-    // FIXME: hardcoded line thickness
     RendererHelper::drawLine(renderer, nodeA.getPosition(), nodeB.getPosition(),
-                             4.0f, LINK_COLOR);
+                             LINK_THICKNESS, LINK_COLOR);
   }
   for (const Node &node : nodes) {
-    // FIXME: hardcoded node radius
-    RendererHelper::drawCircleInterior(renderer, node.getPosition(), 12.0f,
+    const float nodeRadius = NODE_SIZE_MULTIPLIER * node.getMass();
+    RendererHelper::drawCircleInterior(renderer, node.getPosition(), nodeRadius,
                                        NODE_FILL);
-    RendererHelper::drawCircleOutline(renderer, node.getPosition(), 12.0f,
+    RendererHelper::drawCircleOutline(renderer, node.getPosition(), nodeRadius,
                                       NODE_OUTLINE);
   }
 }
