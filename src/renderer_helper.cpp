@@ -1,23 +1,31 @@
 #include "../include/renderer_helper.hpp"
 
-void RendererHelper::drawPixel(SDL_Renderer *renderer, const float x,
-                               const float y) {
-  const int32_t ix = static_cast<int32_t>(x + 0.5f);
-  const int32_t iy = static_cast<int32_t>(y + 0.5f);
-  SDL_RenderDrawPoint(renderer, ix, iy);
+void RendererHelper::drawCircleInterior(SDL_Renderer *renderer,
+                                        const glm::vec2 &center,
+                                        const float radius,
+                                        const glm::tvec4<uint8_t> &color) {
+  SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+  for (int32_t y = -radius; y <= radius; ++y) {
+    for (int32_t x = -radius; x <= radius; ++x) {
+      if (x * x + y * y <= radius * radius) {
+        SDL_RenderDrawPoint(renderer, center.x + x, center.y + y);
+      }
+    }
+  }
 }
 
-void RendererHelper::drawCircle(SDL_Renderer *renderer, const glm::vec2 &center,
-                                const float radius) {
+void RendererHelper::drawCircleOutline(SDL_Renderer *renderer,
+                                       const glm::vec2 &center,
+                                       const float radius,
+                                       const glm::tvec4<uint8_t> &color) {
+  SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
   float x = radius;
   float y = 0;
-  float p = 1 - radius; // Decision parameter
-  // Initial point on the perimeter of the circle
-  drawPixel(renderer, center.x + x, center.y + y);
-  drawPixel(renderer, center.x - x, center.y + y);
-  drawPixel(renderer, center.x + y, center.y + x);
-  drawPixel(renderer, center.x - y, center.y + x);
-  // Draw the circle using the symmetry of the eight octants
+  float p = 1 - radius;
+  SDL_RenderDrawPoint(renderer, center.x + x, center.y + y);
+  SDL_RenderDrawPoint(renderer, center.x - x, center.y + y);
+  SDL_RenderDrawPoint(renderer, center.x + y, center.y + x);
+  SDL_RenderDrawPoint(renderer, center.x - y, center.y + x);
   while (x > y) {
     y += 1;
     if (p <= 0) {
@@ -26,20 +34,20 @@ void RendererHelper::drawCircle(SDL_Renderer *renderer, const glm::vec2 &center,
       x -= 1;
       p += 2 * (y - x) + 1;
     }
-    // Draw points for each octant
-    drawPixel(renderer, center.x + x, center.y + y);
-    drawPixel(renderer, center.x - x, center.y + y);
-    drawPixel(renderer, center.x + x, center.y - y);
-    drawPixel(renderer, center.x - x, center.y - y);
-    drawPixel(renderer, center.x + y, center.y + x);
-    drawPixel(renderer, center.x - y, center.y + x);
-    drawPixel(renderer, center.x + y, center.y - x);
-    drawPixel(renderer, center.x - y, center.y - x);
+    SDL_RenderDrawPoint(renderer, center.x + x, center.y + y);
+    SDL_RenderDrawPoint(renderer, center.x - x, center.y + y);
+    SDL_RenderDrawPoint(renderer, center.x + x, center.y - y);
+    SDL_RenderDrawPoint(renderer, center.x - x, center.y - y);
+    SDL_RenderDrawPoint(renderer, center.x + y, center.y + x);
+    SDL_RenderDrawPoint(renderer, center.x - y, center.y + x);
+    SDL_RenderDrawPoint(renderer, center.x + y, center.y - x);
+    SDL_RenderDrawPoint(renderer, center.x - y, center.y - x);
   }
 }
 
-void drawLine(SDL_Renderer *renderer, const glm::vec2 &start,
-              const glm::vec2 &end, float thickness) {
+void RendererHelper::drawLine(SDL_Renderer *renderer, const glm::vec2 &start,
+                              const glm::vec2 &end, const float thickness,
+                              const glm::tvec4<uint8_t> &color) {
   const glm::vec2 direction = end - start;
   const float length = glm::length(direction);
   const glm::vec2 directionNorm = direction / length;
@@ -49,5 +57,6 @@ void drawLine(SDL_Renderer *renderer, const glm::vec2 &start,
                                 {start.x - offset.x, start.y - offset.y},
                                 {end.x - offset.x, end.y - offset.y},
                                 {end.x + offset.x, end.y + offset.y}};
+  SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
   SDL_RenderDrawLinesF(renderer, points, 4);
 }

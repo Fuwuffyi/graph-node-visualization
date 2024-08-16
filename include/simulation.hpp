@@ -22,6 +22,16 @@ public:
   void render(SDL_Renderer *renderer) const;
 
 private:
+  // Simulation parameters
+  static constexpr glm::tvec4<uint8_t> LINK_COLOR =
+      glm::tvec4<uint8_t>(120, 120, 120, 255);
+  static constexpr glm::tvec4<uint8_t> NODE_OUTLINE =
+      glm::tvec4<uint8_t>(0, 255, 255, 150);
+  static constexpr glm::tvec4<uint8_t> NODE_FILL =
+      glm::tvec4<uint8_t>(255, 255, 255, 255);
+
+private:
+  // Actual needed variables
   std::vector<Node> nodes;
   std::vector<Link_t> links;
 };
