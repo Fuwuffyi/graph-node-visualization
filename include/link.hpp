@@ -1,15 +1,17 @@
 #pragma once
 
 #include "node.hpp"
+#include <memory>
 
 class Link {
 public:
-  Link(const Node &nodeA_, const Node &nodeB_);
+  Link(const std::shared_ptr<Node> &nodeA_,
+       const std::shared_ptr<Node> &nodeB_);
 
-  const Node &getNodeA() const;
-  const Node &getNodeB() const;
+  const std::shared_ptr<Node> &getNodeA() const;
+  const std::shared_ptr<Node> &getNodeB() const;
 
 private:
-  const Node &nodeA;
-  const Node &nodeB;
+  const std::shared_ptr<Node> nodeA;
+  const std::shared_ptr<Node> nodeB;
 };
