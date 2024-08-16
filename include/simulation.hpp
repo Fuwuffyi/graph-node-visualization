@@ -16,19 +16,20 @@ public:
   Simulation();
 
   void addNode(const Node &node);
-  void addLink(/* TODO: */);
+  void addLink(const Node &nodeA, const Node &nodeB);
 
   void update(const float deltaTime);
   void render(SDL_Renderer *renderer) const;
 
 private:
-  // Simulation parameters
+  // Simulation visualization parameters
   static constexpr glm::tvec4<uint8_t> LINK_COLOR =
       glm::tvec4<uint8_t>(120, 120, 120, 255);
   static constexpr glm::tvec4<uint8_t> NODE_OUTLINE =
       glm::tvec4<uint8_t>(0, 255, 255, 150);
   static constexpr glm::tvec4<uint8_t> NODE_FILL =
       glm::tvec4<uint8_t>(255, 255, 255, 255);
+  // Simulation physics parameters
 
 private:
   // Actual needed variables

@@ -11,8 +11,9 @@ public:
   Node(const std::string &name_, const float mass_);
   Node(const std::string &name_);
 
-  void applyForce(const glm::vec2 &force, const float deltaTime);
-  void update(const float velocityDamping); // Damping must be 0 .. 1
+  void applyForce(const glm::vec2 &force);
+  void update(const float velocityDamping,
+              const float deltaTime); // Damping must be 0 .. 1
 
   const std::string &getName() const;
   const float &getMass() const;
