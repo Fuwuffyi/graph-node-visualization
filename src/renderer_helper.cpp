@@ -1,4 +1,5 @@
 #include "../include/renderer_helper.hpp"
+#include <SDL2/SDL_render.h>
 
 void RendererHelper::drawCircleInterior(SDL_Renderer *renderer,
                                         const glm::vec2 &center,
@@ -48,21 +49,19 @@ void RendererHelper::drawCircleOutline(SDL_Renderer *renderer,
 void RendererHelper::drawLine(SDL_Renderer *renderer, const glm::vec2 &start,
                               const glm::vec2 &end, const float thickness,
                               const glm::tvec4<uint8_t> &color) {
-  const glm::vec2 direction = end - start;
-  const float length = glm::length(direction);
-  const glm::vec2 directionNorm = direction / length;
-  const glm::vec2 perp = glm::vec2(-directionNorm.y, directionNorm.x);
-  const glm::vec2 offset = perp * (thickness / 2.0f);
-  const glm::vec2 points[4] = {
-      glm::vec2(start.x + offset.x, start.y + offset.y),
-      glm::vec2(end.x - offset.x, end.y + offset.y),
-      glm::vec2(start.x - offset.x, start.y - offset.y),
-      glm::vec2(end.x + offset.x, end.y - offset.y)};
+  const glm::vec2 deltaPos = end - start;
+  const float length = glm::length(deltaPos);
+  const glm::vec2 unitDelta = deltaPos / length;
+  const glm::vec2 perp = glm::vec2(-unitDelta.y, unitDelta.x) * (thickness / 2);
+  const glm::vec2 points[4] = {start + perp, start - perp, end - perp,
+                               end + perp};
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-  for (uint8_t i = 0; i < 4; ++i) {
-    for (uint8_t j = 0; j < 4; ++j) {
-      SDL_RenderDrawLineF(renderer, points[i].x, points[i].y, points[j].x,
-                          points[j].y);
-    }
-  }
+  SDL_RenderDrawLine(renderer, points[0].x, points[0].y, points[1].x,
+                     points[1].y);
+  SDL_RenderDrawLine(renderer, points[1].x, points[1].y, points[2].x,
+                     points[2].y);
+  SDL_RenderDrawLine(renderer, points[2].x, points[2].y, points[3].x,
+                     points[3].y);
+  SDL_RenderDrawLine(renderer, points[3].x, points[3].y, points[0].x,
+                     points[0].y);
 }
