@@ -10,13 +10,7 @@ private:
   typedef struct Link {
     const uint32_t idxNodeA;
     const uint32_t idxNodeB;
-
-    bool operator<(const Link &other) const {
-      if (idxNodeA != other.idxNodeA) {
-        return idxNodeA < other.idxNodeA;
-      }
-      return idxNodeB < other.idxNodeB;
-    }
+    bool operator<(const Link &other) const;
   } Link_t;
 
 public:

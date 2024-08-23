@@ -25,10 +25,13 @@ int main() {
   }
   const std::vector<Node> &nodes = simulation.getNodes();
   for (uint32_t i = 0; i < 50; ++i) {
-    const uint32_t v1 = static_cast<uint32_t>(uDistr(generator) * nodes.size());
-    uint32_t v2 = static_cast<uint32_t>(uDistr(generator) * nodes.size());
+    const uint32_t v1 = static_cast<uint32_t>(uDistr(generator) *
+                                              static_cast<float>(nodes.size()));
+    uint32_t v2 = static_cast<uint32_t>(uDistr(generator) *
+                                        static_cast<float>(nodes.size()));
     while (v2 == v1) {
-      v2 = static_cast<uint32_t>(uDistr(generator) * nodes.size());
+      v2 = static_cast<uint32_t>(uDistr(generator) *
+                                 static_cast<float>(nodes.size()));
     }
     simulation.addLink(v1, v2);
   }

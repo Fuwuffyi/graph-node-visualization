@@ -82,6 +82,8 @@ void Window::handleEvents() {
     case SDL_MOUSEBUTTONDOWN:
       handleMouseButtonDown(event.button);
       break;
+    default:
+      break;
     }
   }
 }

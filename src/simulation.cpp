@@ -2,6 +2,13 @@
 
 #include "../include/renderer_helper.hpp"
 
+bool Simulation::Link::operator<(const Link &other) const {
+  if (idxNodeA != other.idxNodeA) {
+    return idxNodeA < other.idxNodeA;
+  }
+  return idxNodeB < other.idxNodeB;
+}
+
 Simulation::Simulation(const float width_, const float height_,
                        const std::vector<Node> &nodes_)
     : dimensions(width_, height_), translation(dimensions / 2.0f),
