@@ -1,14 +1,15 @@
 #pragma once
 
-#include "simulation.hpp"
+#include "link.hpp"
 #include <string>
+#include <unordered_set>
 
 class FileParser {
 public:
   FileParser(const std::string &filePath);
 
-  const std::set<Simulation::Link_t> &getLinks();
+  const std::unordered_set<Link> &getLinks();
 
 private:
-  std::set<Simulation::Link_t> links;
+  std::unordered_set<Link> links;
 };

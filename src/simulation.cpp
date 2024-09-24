@@ -4,16 +4,6 @@
 
 #include <SDL2/SDL_ttf.h>
 #include <filesystem>
-#include <iostream>
-
-bool Simulation::Link::operator<(const Link &other) const {
-  return std::min(idxNodeA, idxNodeB) <
-             std::min(other.idxNodeA, other.idxNodeB) ||
-         (std::min(idxNodeA, idxNodeB) ==
-              std::min(other.idxNodeA, other.idxNodeB) &&
-          std::max(idxNodeA, idxNodeB) <
-              std::max(other.idxNodeA, other.idxNodeB));
-}
 
 Simulation::Simulation(const float width_, const float height_,
                        const std::vector<Node> &nodes_)
@@ -25,11 +15,11 @@ Simulation::Simulation(const float width_, const float height_)
 void Simulation::addNode(const Node &node) { nodes.push_back(node); }
 
 void Simulation::addLink(const uint32_t indexA, const uint32_t indexB) {
-  links.insert(Link_t{indexA, indexB});
+  links.insert(Link{indexA, indexB});
 }
 
-void Simulation::addLinks(const std::set<Link_t> &linksToAdd) {
-  for (const Link_t &link : linksToAdd) {
+void Simulation::addLinks(const std::unordered_set<Link> &linksToAdd) {
+  for (const Link &link : linksToAdd) {
     this->links.insert(link);
   }
 }
@@ -57,10 +47,10 @@ void Simulation::update(const float deltaTime) {
       }
     }
   }
-  for (const Link_t &link : links) {
+  for (const Link &link : links) {
     // Get the two nodes linked together
-    Node &nodeA = nodes[link.idxNodeA];
-    Node &nodeB = nodes[link.idxNodeB];
+    Node &nodeA = nodes[link.getIdxA()];
+    Node &nodeB = nodes[link.getIdxB()];
     // Calculate distance and direction
     const float distance =
         glm::distance(nodeB.getPosition(), nodeA.getPosition());
@@ -86,9 +76,9 @@ void Simulation::update(const float deltaTime) {
 }
 
 void Simulation::render(SDL_Renderer *renderer) const {
-  for (const Link_t &link : links) {
-    const Node &nodeA = nodes[link.idxNodeA];
-    const Node &nodeB = nodes[link.idxNodeB];
+  for (const Link &link : links) {
+    const Node &nodeA = nodes[link.getIdxA()];
+    const Node &nodeB = nodes[link.getIdxB()];
     RendererHelper::drawLine(renderer, nodeA.getPosition() + translation,
                              nodeB.getPosition() + translation, LINK_THICKNESS,
                              LINK_COLOR);
@@ -120,6 +110,4 @@ void Simulation::render(SDL_Renderer *renderer) const {
 }
 
 const std::vector<Node> &Simulation::getNodes() const { return nodes; }
-const std::set<Simulation::Link_t> &Simulation::getLinks() const {
-  return links;
-}
+const std::unordered_set<Link> &Simulation::getLinks() const { return links; }

@@ -1,9 +1,9 @@
 #include "../include/file_parser.hpp"
 #include <fstream>
-#include <map>
 #include <sstream>
 #include <stdexcept>
 #include <string>
+#include <vector>
 
 FileParser::FileParser(const std::string &filePath) {
   std::ifstream file(filePath);
@@ -12,7 +12,6 @@ FileParser::FileParser(const std::string &filePath) {
   }
   // Split all lines
   std::string line;
-  std::map<uint8_t, std::vector<uint8_t>> collisionMap;
   while (getline(file, line)) {
     std::stringstream ss(line);
     // Get ID
@@ -30,11 +29,11 @@ FileParser::FileParser(const std::string &filePath) {
     while (getline(conn_stream, conn_str, ' ')) {
       const uint8_t connection = static_cast<uint8_t>(std::stoi(conn_str) - 1);
       if (id != connection) {
-        links.insert(Simulation::Link_t{id, connection});
+        links.insert(Link(id, connection));
       }
     }
   }
   file.close();
 }
 
-const std::set<Simulation::Link_t> &FileParser::getLinks() { return links; }
+const std::unordered_set<Link> &FileParser::getLinks() { return links; }

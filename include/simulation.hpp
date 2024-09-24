@@ -1,33 +1,27 @@
 #pragma once
 
+#include "link.hpp"
 #include "node.hpp"
 #include <SDL2/SDL.h>
-#include <set>
+#include <unordered_set>
 #include <vector>
 
 class Simulation {
 public:
-  typedef struct Link {
-    const uint32_t idxNodeA;
-    const uint32_t idxNodeB;
-    bool operator<(const Link &other) const;
-  } Link_t;
-
   Simulation(const float width_, const float height_,
              const std::vector<Node> &nodes_);
   Simulation(const float width_, const float height_);
 
   void addNode(const Node &node);
   void addLink(const uint32_t indexA, const uint32_t indexB);
-  void addLinks(const std::set<Link_t> &linksToAdd);
+  void addLinks(const std::unordered_set<Link> &linksToAdd);
 
   void update(const float deltaTime);
   void render(SDL_Renderer *renderer) const;
 
   const std::vector<Node> &getNodes() const;
-  const std::set<Link_t> &getLinks() const;
+  const std::unordered_set<Link> &getLinks() const;
 
-  // TEXCOL: 223, 223, 250
 private:
   // Simulation visualization parameters
   static constexpr glm::tvec4<uint8_t> LINK_COLOR =
@@ -56,5 +50,5 @@ private:
   const glm::vec2 dimensions;
   const glm::vec2 translation;
   std::vector<Node> nodes;
-  std::set<Link_t> links;
+  std::unordered_set<Link> links;
 };
