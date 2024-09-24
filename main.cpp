@@ -20,8 +20,8 @@ int main() {
       -static_cast<float>(SCREEN_HEIGHT) / 6.0f,
       static_cast<float>(SCREEN_HEIGHT) / 6.0f);
   for (uint32_t i = 0; i < 201; ++i) {
-    simulation.addNode(Node(&"Node "[i], 1.0f,
-                            glm::vec2(wDistr(generator), hDistr(generator))));
+    simulation.addNode(
+        Node(i, 1.0f, glm::vec2(wDistr(generator), hDistr(generator))));
   }
   // Load the file
   FileParser parser("./students");

@@ -17,7 +17,7 @@ public:
   void addLinks(const std::unordered_set<Link> &linksToAdd);
 
   void update(const float deltaTime);
-  void render(SDL_Renderer *renderer) const;
+  void render(SDL_Renderer *renderer, const Node *selectedNode) const;
 
   const std::vector<Node> &getNodes() const;
   std::vector<Node> &getEditableNodes();

@@ -75,29 +75,48 @@ void Simulation::update(const float deltaTime) {
   }
 }
 
-void Simulation::render(SDL_Renderer *renderer) const {
+void Simulation::render(SDL_Renderer *renderer,
+                        const Node *selectedNode) const {
+  glm::tvec4<uint8_t> linkColor = LINK_COLOR;
+  glm::tvec4<uint8_t> nodeFill = NODE_FILL;
+  glm::tvec4<uint8_t> nodeOutline = NODE_OUTLINE;
+  glm::tvec4<uint8_t> textColor = TEXT_COLOR;
+  if (selectedNode != nullptr) {
+    linkColor.a = 5;
+    nodeFill.a = 40;
+    nodeOutline.a = 40;
+    textColor.a = 40;
+  }
   for (const Link &link : links) {
     const Node &nodeA = nodes[link.getIdxA()];
     const Node &nodeB = nodes[link.getIdxB()];
-    RendererHelper::drawLine(renderer, nodeA.getPosition() + translation,
-                             nodeB.getPosition() + translation, LINK_THICKNESS,
-                             LINK_COLOR);
+    RendererHelper::drawLine(
+        renderer, nodeA.getPosition() + translation,
+        nodeB.getPosition() + translation, LINK_THICKNESS,
+        selectedNode != nullptr &&
+                ((nodeA == *selectedNode) || (nodeB == *selectedNode))
+            ? LINK_COLOR
+            : linkColor);
   }
   for (uint32_t i = 0; i < nodes.size(); ++i) {
     const Node &node = nodes[i];
     const float nodeRadius = NODE_SIZE_MULTIPLIER * node.getMass();
     const glm::vec2 currentPos = node.getPosition() + translation;
-    RendererHelper::drawCircleInterior(renderer, currentPos, nodeRadius,
-                                       NODE_FILL);
-    RendererHelper::drawCircleOutline(renderer, currentPos, nodeRadius,
-                                      NODE_OUTLINE);
+    RendererHelper::drawCircleInterior(
+        renderer, currentPos, nodeRadius,
+        selectedNode != nullptr && (node == *selectedNode) ? NODE_FILL
+                                                           : nodeFill);
+    RendererHelper::drawCircleOutline(
+        renderer, currentPos, nodeRadius,
+        selectedNode != nullptr && (node == *selectedNode) ? NODE_OUTLINE
+                                                           : nodeOutline);
     static TTF_Font *font = TTF_OpenFont(
         (std::filesystem::current_path().generic_string() + "/comicsans.ttf")
             .c_str(),
         64);
     SDL_Surface *surfaceMessage = TTF_RenderText_Solid(
         font, std::to_string(i + 1).c_str(),
-        {TEXT_COLOR.r, TEXT_COLOR.g, TEXT_COLOR.b, TEXT_COLOR.a});
+        {textColor.r, textColor.g, textColor.b, textColor.a});
     SDL_Texture *message =
         SDL_CreateTextureFromSurface(renderer, surfaceMessage);
     const SDL_Rect Message_rect = SDL_Rect{
