@@ -18,6 +18,7 @@ public:
   const std::string &getName() const;
   const float &getMass() const;
   const glm::vec2 &getPosition() const;
+  void setPosition(const glm::vec2 &pos);
   const glm::vec2 &getVelocity() const;
   const glm::vec2 &getAcceleration() const;
 

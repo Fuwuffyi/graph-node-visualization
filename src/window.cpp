@@ -1,14 +1,16 @@
 #include "../include/window.hpp"
 
+#include <SDL2/SDL_mouse.h>
 #include <SDL2/SDL_timer.h>
 #include <SDL2/SDL_ttf.h>
 #include <csignal>
 #include <glm/common.hpp>
 #include <iostream>
 
-Window::Window(const std::string &title, const uint32_t width,
-               const uint32_t height)
-    : window(nullptr), renderer(nullptr), isRunning(true) {
+Window::Window(const std::string &title, const uint32_t _width,
+               const uint32_t _height)
+    : width(_width), height(_height), window(nullptr), renderer(nullptr),
+      isRunning(true), currentNode(nullptr) {
   // Init SDL
   if (SDL_Init(SDL_INIT_VIDEO) < 0) {
     std::cerr << "SDL could not initialize! SDL_Error: " << SDL_GetError()
@@ -51,7 +53,7 @@ void Window::run(Simulation &simulation) {
   uint32_t previousTime = SDL_GetTicks();
   while (isRunning) {
     // Handle all events
-    handleEvents();
+    handleEvents(simulation.getEditableNodes());
     if (!isRunning) {
       break;
     }
@@ -62,6 +64,12 @@ void Window::run(Simulation &simulation) {
     previousTime = currentTime;
     // Update screen
     update(simulation, deltaTime);
+    // Make selected node follow mouse
+    if (currentNode != nullptr) {
+      int32_t x, y;
+      SDL_GetMouseState(&x, &y);
+      currentNode->setPosition(glm::vec2(x - width / 2.0f, y - height / 2.0f));
+    }
     render(simulation);
     // Set FPS cap
     const uint32_t frameDuration = SDL_GetTicks() - currentTime;
@@ -71,7 +79,7 @@ void Window::run(Simulation &simulation) {
   }
 }
 
-void Window::handleEvents() {
+void Window::handleEvents(std::vector<Node> &nodes) {
   SDL_Event event;
   while (SDL_PollEvent(&event) != 0) {
     switch (event.type) {
@@ -82,7 +90,9 @@ void Window::handleEvents() {
       handleKeyDown(static_cast<SDL_KeyCode>(event.key.keysym.sym));
       break;
     case SDL_MOUSEBUTTONDOWN:
-      handleMouseButtonDown(event.button);
+    case SDL_MOUSEBUTTONUP:
+      handleMouseButtonDown(event.button, nodes,
+                            event.type == SDL_MOUSEBUTTONDOWN);
       break;
     default:
       break;
@@ -107,10 +117,18 @@ void Window::handleKeyDown(const SDL_KeyCode &k) {
   }
 }
 
-void Window::handleMouseButtonDown(const SDL_MouseButtonEvent &e) {
-  // TODO: Make nodes move with mouse?
-  if (e.button == SDL_BUTTON_LEFT) {
-    std::cout << "Left mouse button clicked at (" << e.x << ", " << e.y << ")"
-              << std::endl;
+void Window::handleMouseButtonDown(const SDL_MouseButtonEvent &e,
+                                   std::vector<Node> &nodes,
+                                   const bool isMouseDown) {
+  if (isMouseDown) {
+    for (Node &n : nodes) {
+      const float dist = glm::distance(
+          n.getPosition(), glm::vec2(e.x - width / 2.0f, e.y - height / 2.0f));
+      if (dist < 20.0f) {
+        currentNode = &n;
+      }
+    }
+  } else {
+    currentNode = nullptr;
   }
 }

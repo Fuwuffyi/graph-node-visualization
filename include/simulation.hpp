@@ -20,6 +20,7 @@ public:
   void render(SDL_Renderer *renderer) const;
 
   const std::vector<Node> &getNodes() const;
+  std::vector<Node> &getEditableNodes();
   const std::unordered_set<Link> &getLinks() const;
 
 private:
@@ -37,10 +38,10 @@ private:
       10.0f; // Node's radius multiplier
              // Simulation physics parameters
   static constexpr float VELOCITY_DAMPING =
-      0.99f; // Multiplies the velocity every frame (0.0f - 1.0f)
+      0.95f; // Multiplies the velocity every frame (0.0f - 1.0f)
   static constexpr float CENTER_ATTRACTION_FORCE_MULT =
       80.0f; // Multiplies the center attraction force
-  static constexpr float REPULSION_FORCE_MULT = 360.0f;
+  static constexpr float REPULSION_FORCE_MULT = 340.0f;
   static constexpr float ATTRACTION_FORCE_MULT = 340.0f;
   static constexpr float ATTRACTION_DISTANCE_TRESHOLD =
       40.0f; // Maximum distance at which there is no attraction

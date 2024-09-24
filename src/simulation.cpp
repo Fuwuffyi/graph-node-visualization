@@ -110,4 +110,5 @@ void Simulation::render(SDL_Renderer *renderer) const {
 }
 
 const std::vector<Node> &Simulation::getNodes() const { return nodes; }
+std::vector<Node> &Simulation::getEditableNodes() { return nodes; }
 const std::unordered_set<Link> &Simulation::getLinks() const { return links; }

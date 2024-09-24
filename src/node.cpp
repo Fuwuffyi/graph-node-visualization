@@ -23,5 +23,6 @@ void Node::update(const float velocityDamping, const float deltaTime) {
 const std::string &Node::getName() const { return name; }
 const float &Node::getMass() const { return mass; }
 const glm::vec2 &Node::getPosition() const { return position; }
+void Node::setPosition(const glm::vec2 &pos) { position = pos; };
 const glm::vec2 &Node::getVelocity() const { return velocity; }
 const glm::vec2 &Node::getAcceleration() const { return acceleration; }
