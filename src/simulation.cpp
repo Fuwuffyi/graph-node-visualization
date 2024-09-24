@@ -7,10 +7,12 @@
 #include <iostream>
 
 bool Simulation::Link::operator<(const Link &other) const {
-  if (idxNodeA != other.idxNodeA) {
-    return idxNodeA < other.idxNodeA;
-  }
-  return idxNodeB < other.idxNodeB;
+  return std::min(idxNodeA, idxNodeB) <
+             std::min(other.idxNodeA, other.idxNodeB) ||
+         (std::min(idxNodeA, idxNodeB) ==
+              std::min(other.idxNodeA, other.idxNodeB) &&
+          std::max(idxNodeA, idxNodeB) <
+              std::max(other.idxNodeA, other.idxNodeB));
 }
 
 Simulation::Simulation(const float width_, const float height_,
