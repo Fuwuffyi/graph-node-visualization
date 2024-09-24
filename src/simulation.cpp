@@ -102,7 +102,7 @@ void Simulation::render(SDL_Renderer *renderer) const {
     static TTF_Font *font = TTF_OpenFont(
         (std::filesystem::current_path().generic_string() + "/comicsans.ttf")
             .c_str(),
-        24);
+        64);
     SDL_Surface *surfaceMessage = TTF_RenderText_Solid(
         font, std::to_string(i + 1).c_str(),
         {TEXT_COLOR.r, TEXT_COLOR.g, TEXT_COLOR.b, TEXT_COLOR.a});

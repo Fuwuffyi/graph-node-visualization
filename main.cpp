@@ -3,7 +3,7 @@
 
 #include <random>
 
-constexpr uint32_t SCREEN_WIDTH = 900;
+constexpr uint32_t SCREEN_WIDTH = 1600;
 constexpr uint32_t SCREEN_HEIGHT = 900;
 
 int main() {
@@ -19,7 +19,7 @@ int main() {
   std::uniform_real_distribution<float> hDistr(
       -static_cast<float>(SCREEN_HEIGHT) / 6.0f,
       static_cast<float>(SCREEN_HEIGHT) / 6.0f);
-  for (uint32_t i = 0; i < 200; ++i) {
+  for (uint32_t i = 0; i < 201; ++i) {
     simulation.addNode(Node(&"Node "[i], 1.0f,
                             glm::vec2(wDistr(generator), hDistr(generator))));
   }

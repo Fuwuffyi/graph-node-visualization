@@ -46,10 +46,10 @@ private:
       0.99f; // Multiplies the velocity every frame (0.0f - 1.0f)
   static constexpr float CENTER_ATTRACTION_FORCE_MULT =
       80.0f; // Multiplies the center attraction force
-  static constexpr float REPULSION_FORCE_MULT = 320.0f;
-  static constexpr float ATTRACTION_FORCE_MULT = 320.0f;
+  static constexpr float REPULSION_FORCE_MULT = 360.0f;
+  static constexpr float ATTRACTION_FORCE_MULT = 340.0f;
   static constexpr float ATTRACTION_DISTANCE_TRESHOLD =
-      10.0f; // Maximum distance at which there is no attraction
+      40.0f; // Maximum distance at which there is no attraction
 
 private:
   // Actual needed variables
