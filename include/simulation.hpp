@@ -27,14 +27,15 @@ public:
   const std::vector<Node> &getNodes() const;
   const std::set<Link_t> &getLinks() const;
 
+  // TEXCOL: 223, 223, 250
 private:
   // Simulation visualization parameters
   static constexpr glm::tvec4<uint8_t> LINK_COLOR =
-      glm::tvec4<uint8_t>(175, 25, 0, 255); // The node's link line color
+      glm::tvec4<uint8_t>(129, 129, 234, 255); // The node's link line color
   static constexpr glm::tvec4<uint8_t> NODE_OUTLINE =
-      glm::tvec4<uint8_t>(225, 225, 225, 100); // Node's outline color in RGBA
+      glm::tvec4<uint8_t>(209, 53, 221, 100); // Node's outline color in RGBA
   static constexpr glm::tvec4<uint8_t> NODE_FILL =
-      glm::tvec4<uint8_t>(179, 179, 179, 255);  // Node's inner color in RGBA
+      glm::tvec4<uint8_t>(111, 24, 143, 255);   // Node's inner color in RGBA
   static constexpr float LINK_THICKNESS = 3.0f; // Thickness of the link line
   static constexpr float NODE_SIZE_MULTIPLIER =
       10.0f; // Node's radius multiplier
