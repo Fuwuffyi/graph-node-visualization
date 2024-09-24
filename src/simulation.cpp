@@ -22,6 +22,12 @@ void Simulation::addLink(const uint32_t indexA, const uint32_t indexB) {
   links.insert(Link_t{indexA, indexB});
 }
 
+void Simulation::addLinks(const std::set<Link_t> &linksToAdd) {
+  for (const Link_t &link : linksToAdd) {
+    this->links.insert(link);
+  }
+}
+
 void Simulation::update(const float deltaTime) {
   for (Node &node : nodes) {
     // Add center gravity force to all nodes

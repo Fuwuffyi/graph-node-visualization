@@ -1,4 +1,4 @@
-#include "include/simulation.hpp"
+#include "include/file_parser.hpp"
 #include "include/window.hpp"
 
 #include <random>
@@ -19,22 +19,13 @@ int main() {
   std::uniform_real_distribution<float> hDistr(
       -static_cast<float>(SCREEN_HEIGHT) / 6.0f,
       static_cast<float>(SCREEN_HEIGHT) / 6.0f);
-  for (uint32_t i = 0; i < 60; ++i) {
+  for (uint32_t i = 0; i < 200; ++i) {
     simulation.addNode(Node(&"Node "[i], 1.0f,
                             glm::vec2(wDistr(generator), hDistr(generator))));
   }
-  const std::vector<Node> &nodes = simulation.getNodes();
-  for (uint32_t i = 0; i < 50; ++i) {
-    const uint32_t v1 = static_cast<uint32_t>(uDistr(generator) *
-                                              static_cast<float>(nodes.size()));
-    uint32_t v2 = static_cast<uint32_t>(uDistr(generator) *
-                                        static_cast<float>(nodes.size()));
-    while (v2 == v1) {
-      v2 = static_cast<uint32_t>(uDistr(generator) *
-                                 static_cast<float>(nodes.size()));
-    }
-    simulation.addLink(v1, v2);
-  }
+  // Load the file
+  FileParser parser("./students");
+  simulation.addLinks(parser.getLinks());
   // Create the window and run the simulation
   Window window("SDL Grapher", SCREEN_WIDTH, SCREEN_HEIGHT);
   window.run(simulation);
