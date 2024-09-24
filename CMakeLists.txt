@@ -44,4 +44,4 @@ include_directories(SYSTEM ${glm_SOURCE_DIR} SYSTEM ${sdl_SOURCE_DIR})
 add_executable(graph main.cpp ${SRCS} ${HDRS})
 
 # Find dependencies based on platform
-target_link_libraries(graph SDL2 SDL2main)
+target_link_libraries(graph SDL2 SDL2main SDL2_ttf)

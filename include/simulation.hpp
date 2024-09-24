@@ -35,7 +35,9 @@ private:
   static constexpr glm::tvec4<uint8_t> NODE_OUTLINE =
       glm::tvec4<uint8_t>(209, 53, 221, 100); // Node's outline color in RGBA
   static constexpr glm::tvec4<uint8_t> NODE_FILL =
-      glm::tvec4<uint8_t>(111, 24, 143, 255);   // Node's inner color in RGBA
+      glm::tvec4<uint8_t>(111, 24, 143, 255); // Node's inner color in RGBA
+  static constexpr glm::tvec4<uint8_t> TEXT_COLOR =
+      glm::tvec4<uint8_t>(223, 223, 250, 255);  // Node index text color
   static constexpr float LINK_THICKNESS = 3.0f; // Thickness of the link line
   static constexpr float NODE_SIZE_MULTIPLIER =
       10.0f; // Node's radius multiplier

@@ -1,6 +1,7 @@
 #include "../include/window.hpp"
 
 #include <SDL2/SDL_timer.h>
+#include <SDL2/SDL_ttf.h>
 #include <csignal>
 #include <glm/common.hpp>
 #include <iostream>
@@ -36,6 +37,7 @@ Window::Window(const std::string &title, const uint32_t width,
     isRunning = false;
     return;
   }
+  TTF_Init();
   SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 }
 

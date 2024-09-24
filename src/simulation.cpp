@@ -2,6 +2,10 @@
 
 #include "../include/renderer_helper.hpp"
 
+#include <SDL2/SDL_ttf.h>
+#include <filesystem>
+#include <iostream>
+
 bool Simulation::Link::operator<(const Link &other) const {
   if (idxNodeA != other.idxNodeA) {
     return idxNodeA < other.idxNodeA;
@@ -87,12 +91,29 @@ void Simulation::render(SDL_Renderer *renderer) const {
                              nodeB.getPosition() + translation, LINK_THICKNESS,
                              LINK_COLOR);
   }
-  for (const Node &node : nodes) {
+  for (uint32_t i = 0; i < nodes.size(); ++i) {
+    const Node &node = nodes[i];
     const float nodeRadius = NODE_SIZE_MULTIPLIER * node.getMass();
-    RendererHelper::drawCircleInterior(
-        renderer, node.getPosition() + translation, nodeRadius, NODE_FILL);
-    RendererHelper::drawCircleOutline(
-        renderer, node.getPosition() + translation, nodeRadius, NODE_OUTLINE);
+    const glm::vec2 currentPos = node.getPosition() + translation;
+    RendererHelper::drawCircleInterior(renderer, currentPos, nodeRadius,
+                                       NODE_FILL);
+    RendererHelper::drawCircleOutline(renderer, currentPos, nodeRadius,
+                                      NODE_OUTLINE);
+    static TTF_Font *font = TTF_OpenFont(
+        (std::filesystem::current_path().generic_string() + "/comicsans.ttf")
+            .c_str(),
+        24);
+    SDL_Surface *surfaceMessage = TTF_RenderText_Solid(
+        font, std::to_string(i).c_str(),
+        {TEXT_COLOR.r, TEXT_COLOR.g, TEXT_COLOR.b, TEXT_COLOR.a});
+    SDL_Texture *message =
+        SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+    const SDL_Rect Message_rect = SDL_Rect{
+        int32_t(currentPos.x - nodeRadius), int32_t(currentPos.y - nodeRadius),
+        int32_t(nodeRadius * 2.0f), int32_t(nodeRadius * 2.0f)};
+    SDL_RenderCopy(renderer, message, NULL, &Message_rect);
+    SDL_FreeSurface(surfaceMessage);
+    SDL_DestroyTexture(message);
   }
 }
 
