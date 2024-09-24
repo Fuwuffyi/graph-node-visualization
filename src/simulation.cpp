@@ -104,7 +104,7 @@ void Simulation::render(SDL_Renderer *renderer) const {
             .c_str(),
         24);
     SDL_Surface *surfaceMessage = TTF_RenderText_Solid(
-        font, std::to_string(i).c_str(),
+        font, std::to_string(i + 1).c_str(),
         {TEXT_COLOR.r, TEXT_COLOR.g, TEXT_COLOR.b, TEXT_COLOR.a});
     SDL_Texture *message =
         SDL_CreateTextureFromSurface(renderer, surfaceMessage);
