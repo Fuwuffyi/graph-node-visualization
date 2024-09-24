@@ -13,3 +13,8 @@ bool Link::operator==(const Link &other) const {
   return (idxNodeA == other.idxNodeA && idxNodeB == other.idxNodeB) ||
          (idxNodeA == other.idxNodeB && idxNodeB == other.idxNodeA);
 }
+
+std::size_t std::hash<Link>::operator()(const Link &k) const {
+  return std::hash<uint32_t>()(k.getIdxA()) ^
+         std::hash<uint32_t>()(k.getIdxB());
+}

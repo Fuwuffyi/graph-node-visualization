@@ -18,8 +18,5 @@ private:
 };
 
 template <> struct std::hash<Link> {
-  std::size_t operator()(const Link &k) const {
-    return std::hash<uint32_t>()(k.getIdxA()) ^
-           std::hash<uint32_t>()(k.getIdxB());
-  }
+  std::size_t operator()(const Link &k) const;
 };
