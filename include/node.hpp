@@ -14,6 +14,7 @@ public:
   void update(const float velocityDamping,
               const float deltaTime); // Damping must be 0 .. 1
 
+  const uint32_t &getId() const;
   const float &getMass() const;
   const glm::vec2 &getPosition() const;
   void setPosition(const glm::vec2 &pos);
