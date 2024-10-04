@@ -60,12 +60,12 @@ void Simulation::update(const float deltaTime) {
       // Calculate the force, using f(x) = x^2 * (1/s) (stronger force
       // when far), multiplied by half cause newton
       nodeA.applyForce(directionVector *
-                       (std::powf(distance - ATTRACTION_DISTANCE_TRESHOLD, 2) *
-                        (1 / (std::powf(glm::length(translation), 2)))) *
+                       (float(std::pow(distance - ATTRACTION_DISTANCE_TRESHOLD, 2)) *
+                        (1 / float(std::pow(glm::length(translation), 2)))) *
                        ATTRACTION_FORCE_MULT * 0.5f);
       nodeB.applyForce(-directionVector *
-                       (std::powf(distance - ATTRACTION_DISTANCE_TRESHOLD, 2) *
-                        (1 / (std::powf(glm::length(translation), 2)))) *
+                       (float(std::pow(distance - ATTRACTION_DISTANCE_TRESHOLD, 2)) *
+                        (1 / float(std::pow(glm::length(translation), 2)))) *
                        ATTRACTION_FORCE_MULT * 0.5f);
     }
   }

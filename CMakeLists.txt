@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.30)
-project(raytracer)
+cmake_minimum_required(VERSION 3.29)
+project(grapher)
 
 # Compiler options
 set(CMAKE_CXX_STANDARD 23)
@@ -10,38 +10,20 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast -march=native -mtune=native -fope
 # Folder structure
 set(SRCDIR src)
 set(INCDIR include)
-set(DOXYGEN_OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR}/doc)
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(sdl2 REQUIRED IMPORTED_TARGET sdl2)
+pkg_check_modules(SDL2_ttf REQUIRED IMPORTED_TARGET SDL2_ttf)
+pkg_check_modules(glm REQUIRED IMPORTED_TARGET glm)
 
 # Recursively search for source files
 file(GLOB_RECURSE SRCS "${SRCDIR}/*.cpp" "${SRCDIR}/*.c")
 # Recursively search for header files
 file(GLOB_RECURSE HDRS "${INCDIR}/*.hpp" "${INCDIR}/*.h")
 
-include(FetchContent)
-# Add FetchContent for GLM
-FetchContent_Declare(
-   glm
-   GIT_REPOSITORY https://github.com/g-truc/glm.git
-   GIT_TAG        master
-)
-FetchContent_MakeAvailable(glm)
-
-FetchContent_Declare(
-   sdl
-   GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
-   GIT_TAG        release-2.30.3
-)
-FetchContent_MakeAvailable(sdl)
-
-# Disable library warnings
-set_source_files_properties(${glm_SOURCE_DIR}/* PROPERTIES COMPILE_FLAGS -w)
-set_source_files_properties(${sdl_SOURCE_DIR}/* PROPERTIES COMPILE_FLAGS -w)
-
-# Include directories
-include_directories(SYSTEM ${glm_SOURCE_DIR} SYSTEM ${sdl_SOURCE_DIR})
-
 # Build targets
 add_executable(graph main.cpp ${SRCS} ${HDRS})
 
 # Find dependencies based on platform
-target_link_libraries(graph SDL2 SDL2main SDL2_ttf)
+# target_link_libraries(graph PRIVATE PkgConfig::sdl2)
+target_link_libraries(graph PRIVATE PkgConfig::sdl2 PkgConfig::SDL2_ttf)
